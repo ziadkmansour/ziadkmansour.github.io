@@ -1,0 +1,131 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>المياه والأواني | خريطة المراجعة</title>
+<style>
+:root{color-scheme:light;--ink:#173531;--green:#166759;--blue:#295b95;--amber:#83520a;--purple:#644493}
+*{box-sizing:border-box}body{margin:0;background:#f5f8f4;color:var(--ink);font:17px/1.55 Tahoma,Arial,sans-serif}main{width:min(960px,94%);margin:auto;padding:36px 0}h1,h2,p{margin:0}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.2}h2{font-size:1.35rem}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #236CA3;outline-offset:3px}header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.pdf{color:#174e44;background:#e1f1e8;padding:.55rem .9rem;border-radius:2rem;text-decoration:none}header p{color:#46635e;margin-bottom:.25rem}
+.map{margin:1.6rem 0 1rem}.root{background:#154b43;color:white;width:max-content;margin:auto;padding:.45rem 1.35rem;border-radius:2rem;font-weight:bold}.map svg{display:block;width:100%;height:44px;color:#739b90}.topics{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}.topic{border:2px solid transparent;background:var(--tint);color:var(--accent);border-radius:13px;padding:.65rem .25rem;font-weight:bold}.topic[aria-pressed=true]{border-color:var(--accent);box-shadow:0 3px 0 var(--accent)}.topic:nth-child(1){--accent:var(--green);--tint:#dff2e9}.topic:nth-child(2){--accent:var(--blue);--tint:#e7effb}.topic:nth-child(3){--accent:var(--purple);--tint:#eee7fb}.topic:nth-child(4){--accent:var(--amber);--tint:#fff0ce}
+.panel,.quiz{background:#fff;border:1px solid #ccdcd5;border-radius:18px;padding:clamp(.75rem,3vw,1.5rem);margin-top:1rem}.panel{border-top:4px solid var(--accent,var(--green))}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.8rem 0}.card{padding:.65rem;border-radius:12px;background:#e7f4ed;color:#175344}.card:nth-child(2){background:#fff1d6;color:#744a0b}.card:nth-child(3){background:#fbe9e9;color:#842f37}.card strong{display:block}.card span{font-size:.92rem}.choices{display:flex;gap:.45rem;flex-wrap:wrap;margin:.6rem 0}.choices button,.secondary{border:1px solid #99b6aa;border-radius:10px;background:#f7fbf8;color:var(--ink);padding:.4rem .7rem}.trail{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin:.5rem 0}.trail span{background:#e6effa;color:#234d7e;padding:.15rem .5rem;border-radius:1rem}.result{padding:.55rem .7rem;background:#e5f4ea;border-inline-start:4px solid var(--green);border-radius:8px}.danger{background:#fce8e9;border-color:#982f39}.review{background:#f2ebfa;border-color:var(--purple)}details{margin-top:.75rem;color:#40554e}summary{cursor:pointer;color:#245b51;font-weight:bold}.quiz header{margin-bottom:.55rem}.quiz button:disabled{cursor:default}.quiz button[data-outcome=correct]{background:#dff2e9;border-color:#297756}.quiz button[data-outcome=wrong]{background:#fce8e9;border-color:#982f39}.quiz small{color:#526862}.secondary{margin-top:.6rem}footer{margin-top:.85rem;color:#526862;font-size:.82rem}
+@media(max-width:575px){main{padding-top:20px}.topics{grid-template-columns:repeat(2,1fr)}.map svg{height:22px}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<header><div><p>فقه شافعي · كتاب الطهارة</p><h1>المياه والأواني</h1></div><a class="pdf" href="./water-and-vessels.pdf" download>تحميل PDF للمراجعة ↓</a></header>
+<nav class="map" aria-label="خريطة الدرس">
+<div class="root">خريطة الباب</div>
+<svg viewBox="0 0 800 45" preserveAspectRatio="none" aria-hidden="true"><path d="M400 0v18 M100 45V18h600v27 M300 18v27 M500 18v27" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+<div class="topics">
+<button class="topic" data-topic="types" aria-pressed="true" aria-controls="lesson">أقسام المياه</button>
+<button class="topic" data-topic="contact" aria-pressed="false" aria-controls="lesson">ملاقاة النجاسة</button>
+<button class="topic" data-topic="doubt" aria-pressed="false" aria-controls="lesson">الاشتباه</button>
+<button class="topic" data-topic="vessels" aria-pressed="false" aria-controls="lesson">الأواني</button>
+</div>
+</nav>
+<section id="lesson" class="panel" aria-label="الفرع المختار"></section>
+<section class="quiz" aria-labelledby="practice"><header><h2 id="practice">اختبر نفسك</h2><small id="count"></small></header><div id="quiz-body"></div><p id="feedback" role="status"></p><button id="next" class="secondary" hidden>السؤال التالي</button></section>
+<footer>المصادر · مشجرة المياه والأواني ودليلها، ص ٣–٤ · تهذيب النجم الوهاج، ص ٢٠–٣٩</footer>
+</main>
+<script>
+const topics = {
+  types: {
+    title: 'ما الفرق بين أقسام الماء؟',
+    cards: [['طَهور','يرفع الحدث ويزيل النجس.'],['طاهر غير طَهور','مثل المستعمل في فرض الطهارة في الجديد.'],['نجس','مثل الماء الذي غيّرت النجاسة أحد أوصافه.']],
+    detail: 'الماء المطلق ما يقع عليه اسم ماء بلا قيد. يبقى طهورًا مع تغير يسير بطاهر لا يسلبه الاسم. قال تعالى ﴿وَأَنزَلْنَا مِنَ السَّمَاءِ مَاءً طَهُورًا﴾ [الفرقان ٤٨].'
+  },
+  contact: {
+    title: 'ماء لاقته نجاسة · اتبع مسار الحكم',
+    detail: 'يستثنى ما لا يدركه الطرف على ما رجحه النووي، وميتة ما لا دم له سائل إذا وقعت بنفسها ولم تغيّر المائع. قال ﷺ «إذا بلغ الماء قلتين لم يحمل الخبث».'
+  },
+  doubt: {
+    title: 'ما الذي اشتبه بالماء الطَهور؟',
+    cards: [['ماء نجس','يتحرّى بعلامة ويعمل بغلبة الظن.'],['بول','يريقهما أو يخلطهما، ثم يتيمم على الصحيح.'],['ماء ورد','يتوضأ بكلٍّ مرة إن لم يجد غيرهما.']],
+    detail: 'يُعتمد خبر العدل بالتنجس إذا بيّن سببًا منجسًا في المذهب أو كان فقيهًا موافقًا.'
+  },
+  vessels: {
+    title: 'ما نوع الإناء؟',
+    cards: [['إناء طاهر','الأصل جواز استعماله.'],['مُضبَّب بالفضة','الحكم يتبع الحجم والحاجة.'],['ذهب أو فضة','يحرم الاستعمال، ويصح الوضوء منه مع الإثم.']],
+    detail: 'ضبة الفضة الصغيرة لحاجة جائزة بلا كراهة، والكبيرة لزينة حرام. وتجوز مع الكراهة إذا كانت صغيرة لزينة أو كبيرة لحاجة. دليل الجواز خبر القدح المشقوق الذي سُلسل بفضة (البخاري).'
+  }
+};
+const lesson = document.querySelector('#lesson');
+const topicButtons = [...document.querySelectorAll('[data-topic]')];
+const details = text => '<details><summary>الدليل والتفصيل</summary><p>' + text + '</p></details>';
+function renderTopic(key) {
+  const topic = topics[key];
+  topicButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.topic === key)));
+  lesson.style.setProperty('--accent', getComputedStyle(topicButtons.find(button => button.dataset.topic === key)).getPropertyValue('--accent'));
+  lesson.innerHTML = '<h2>' + topic.title + '</h2>' +
+    (topic.cards ? '<div class="cards">' + topic.cards.map(([label, text]) => '<div class="card"><strong>' + label + '</strong><span>' + text + '</span></div>').join('') + '</div>' : '<div id="decision"></div>') + details(topic.detail);
+  if (key === 'contact') renderDecision();
+}
+topicButtons.forEach(button => button.addEventListener('click', () => renderTopic(button.dataset.topic)));
+
+const decisions = {
+  start: {question:'هل تغيّر الطعم أو اللون أو الريح بالنجاسة؟', options:[['تغيّر','changed'],['لم يتغيّر','amount']]},
+  amount: {path:['لم يتغيّر'], question:'هل بلغ الماء قلتين؟', options:[['بلغ قلتين','large'],['دون القلتين','small']]},
+  changed: {path:['تغيّر'], result:'نجس · لأن النجاسة غيّرت أحد أوصافه.', danger:true},
+  small: {path:['لم يتغيّر','دون القلتين'], result:'نجس بالملاقاة، مع مراعاة الاستثناءات.', danger:true},
+  large: {path:['لم يتغيّر','بلغ قلتين'], result:'لا ينجس بمجرد الملاقاة.'}
+};
+function renderDecision(key='start', moveFocus=false) {
+  const step = decisions[key];
+  const view = document.querySelector('#decision');
+  const trail = ['لاقته نجاسة', ...(step.path || [])].map(item => '<span>' + item + '</span>').join('<b aria-hidden="true">←</b>');
+  view.innerHTML = '<div class="trail" aria-label="المسار">' + trail + '</div>' +
+    (step.options ? '<p tabindex="-1">' + step.question + '</p><div class="choices">' + step.options.map(([label, next]) => '<button data-step="' + next + '">' + label + '</button>').join('') + '</div>' :
+      '<p tabindex="-1" class="result ' + (step.danger ? 'danger' : '') + '">' + step.result + '</p><button class="secondary" data-step="start">أعد المسار</button>');
+  if (moveFocus) view.querySelector('[tabindex]').focus();
+}
+lesson.addEventListener('click', event => {
+  const button = event.target.closest('[data-step]');
+  if (button) renderDecision(button.dataset.step, true);
+});
+
+const practice = [
+  ['ماء بلغ قلتين ولاقته نجاسة. تغيّرت رائحته. ما حكمه؟',['نجس','باقٍ على طهوريته'],0,'التغيّر بالنجاسة ينجّس الماء وإن بلغ قلتين.'],
+  ['اشتبه ماء مطلق بماء ورد ولم تجد غيرهما. ماذا تفعل؟',['أتحرّى أحدهما','أتوضأ بكلٍّ مرة'],1,'تتوضأ بكلٍّ مرة لتتيقن استعمال الماء المطلق.'],
+  ['ضبة فضة صغيرة لإصلاح شق في إناء. ما حكمها؟',['جائزة بلا كراهة','جائزة مع الكراهة','حرام'],0,'الصغيرة لحاجة جائزة بلا كراهة.']
+];
+const quizBody = document.querySelector('#quiz-body');
+const feedback = document.querySelector('#feedback');
+const next = document.querySelector('#next');
+const arabic = new Intl.NumberFormat('ar');
+let index = 0;
+function renderQuiz(moveFocus=false) {
+  const [question, options] = practice[index];
+  document.querySelector('#count').textContent = arabic.format(index + 1) + ' / ' + arabic.format(practice.length);
+  feedback.textContent = '';
+  feedback.className = '';
+  next.hidden = true;
+  quizBody.innerHTML = '<p tabindex="-1">' + question + '</p><div class="choices">' + options.map((answer, position) => '<button data-answer="' + position + '">' + answer + '</button>').join('') + '</div>';
+  if (moveFocus) quizBody.querySelector('p').focus();
+}
+quizBody.addEventListener('click', event => {
+  const choice = event.target.closest('[data-answer]');
+  if (!choice || choice.disabled) return;
+  const [, , correct, reason] = practice[index];
+  const right = Number(choice.dataset.answer) === correct;
+  quizBody.querySelectorAll('button').forEach(button => {
+    button.disabled = true;
+    if (Number(button.dataset.answer) === correct) button.dataset.outcome = 'correct';
+    else if (button === choice) button.dataset.outcome = 'wrong';
+  });
+  feedback.className = 'result review';
+  feedback.textContent = (right ? 'أحسنت. ' : 'الجواب الصحيح · ') + reason;
+  next.textContent = index === practice.length - 1 ? 'أعد الاختبار' : 'السؤال التالي';
+  next.hidden = false;
+  next.focus();
+});
+next.addEventListener('click', () => {
+  index = (index + 1) % practice.length;
+  renderQuiz(true);
+});
+renderTopic('types');
+renderQuiz();
+</script>
+</body>
+</html>
